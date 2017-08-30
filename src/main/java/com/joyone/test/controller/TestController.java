@@ -19,6 +19,7 @@ public class TestController {
 
     @RequestMapping(value="index",method = GET)
     public String testPage(){
+        System.out.println("aaC1122..");
         return "test/index";
     }
 
