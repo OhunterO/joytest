@@ -1,7 +1,9 @@
 package com.joyone.test.controller;
 
+import com.joyone.test.services.SFAccessTokenService;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,12 +16,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping(value="/test")
 public class TestController {
+
     private String testStr=null;
+
+    @Autowired
+    private SFAccessTokenService sFAccessTokenService;
+
     @RequestMapping(method = GET)
     @ResponseBody
     public String test(HttpServletRequest request){
@@ -39,18 +45,25 @@ public class TestController {
         return "test/index";
     }
 
+    @RequestMapping(value="refresh",method = GET)
+    @ResponseBody
+    public String refreshToken(){
+        sFAccessTokenService.refreshAccessToken();
+        return "refresh OK";
+    }
+
     @ResponseBody
     @RequestMapping(value="/getpic",method = GET)
     public String getPic(ServletResponse response) throws IOException {
         response.setContentType("image/" + "png");
 
         HttpClient httpclient = new HttpClient();
-        String accessToken="00D7F000001ca8T!AQwAQFfV0l6QhcGQTk_NvBQyNdhRDJ3vOgeo71kaCtEULbqSjEOeKJfuytq0U5wdExuFwflasHGMqudKttvxEWdDh2TUqtd.";
+        String accessToken=sFAccessTokenService.getAccessToken();
         GetMethod post = new GetMethod("https://c.ap5.content.force.com/profilephoto/7297F000000kFJB/T/1");
         post.addRequestHeader("Authorization", "OAuth "+accessToken);
         int returnCode = httpclient.executeMethod(post);
-        System.out.println("returnCode " + returnCode);
-        System.out.println(post.getResponseBodyAsString());
+       // System.out.println("returnCode " + returnCode);
+        //System.out.println(post.getResponseBodyAsString());
         InputStream is = post.getResponseBodyAsStream();
 
         ServletOutputStream outputStream = null;
