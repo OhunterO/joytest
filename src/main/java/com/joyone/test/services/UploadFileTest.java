@@ -16,7 +16,7 @@ import java.io.*;
 public class UploadFileTest {
 
     public  static void main(String[] args) throws HttpException, IOException {
-        File contentFile = new File("D:/asd.png");
+        File contentFile = new File("D:/pi.png");
 
         byte[] buffer = null;
         try
@@ -46,10 +46,10 @@ public class UploadFileTest {
         JSONObject content = new JSONObject();
         content.put("Body", fileStr);
         content.put("FolderId", "0057F000000ebtGQAQ");
-        content.put("Name", "testFile");
+        content.put("Name", "opp");
         content.put("Type", "png");
         HttpClient httpclient = new HttpClient();
-        String accessToken="00D7F000001ca8T!AQwAQLBx8TSGHndf2mT0fJHWcOonOk3UJu6kcuwvX._7Ko5BilLneNLVpLwyXonrExIirci7buDXA5bMxgukOnsMl7serxNu";
+        String accessToken="00D7F000001ca8T!AQwAQAniLizKxDDUprauX.bvWRzmu7NPhXd451ZOhVwu4v2350jEBBwebWxrXligVxbJflZf2qEB2o8ocNhzmeTC.K4bLtWB";
         PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/sobjects/Document/");
         post.addRequestHeader("Authorization", "OAuth "+accessToken);
         post.setRequestEntity(new StringRequestEntity(content.toString(),"application/json", null));

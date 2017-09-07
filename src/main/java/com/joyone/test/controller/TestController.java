@@ -69,8 +69,12 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value="/getdupic",method = GET)
-    public String getPicFromDocument(ServletResponse response) throws IOException{
-        SfDocument document = sfDocumentMapper.getSfDocument("0157F000000HxpXQAS");
+    public String getPicFromDocument(@RequestParam(value = "id",required = false)String id, ServletResponse response) throws IOException{
+        String reId= "0157F000000HxpXQAS";
+        if(id!=null){
+            reId = id;
+        }
+        SfDocument document = sfDocumentMapper.getSfDocument(reId);
         System.out.println("sfid=="+document.getSfid());
         System.out.println("name=="+document.getName());
         System.out.println("type=="+document.getType());
@@ -82,6 +86,40 @@ public class TestController {
 
             outputStream = response.getOutputStream();
             byte[] b = decoder.decodeBuffer(new String(picByte));
+            outputStream.write(b);
+            outputStream.flush();
+        } catch (IOException e) {
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getdupicapi",method = GET)
+    public String getPicFromDocumentApi(ServletResponse response) throws IOException{
+        HttpClient httpclient = new HttpClient();
+        String accessToken="00D7F000001ca8T!AQwAQAniLizKxDDUprauX.bvWRzmu7NPhXd451ZOhVwu4v2350jEBBwebWxrXligVxbJflZf2qEB2o8ocNhzmeTC.K4bLtWB";
+        PostMethod post = new PostMethod("https://ap5.salesforce.com/services/apexrest/rest");
+        post.addRequestHeader("Authorization", "OAuth "+accessToken);
+        int returnCode = httpclient.executeMethod(post);
+        System.out.println("returnCode " + returnCode);
+        System.out.println(post.getResponseBodyAsString());
+        String picStr = post.getResponseBodyAsString();
+        picStr=picStr.replace("\"","");
+        BASE64Decoder decoder = new BASE64Decoder();
+        ServletOutputStream outputStream = null;
+        try {
+
+            outputStream = response.getOutputStream();
+            byte[] b = decoder.decodeBuffer(picStr);
             outputStream.write(b);
             outputStream.flush();
         } catch (IOException e) {
