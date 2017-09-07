@@ -6,17 +6,13 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
 
 import java.io.*;
 
-public class UploadFileTest {
+public class UpdateFileTest {
 
     public  static void main(String[] args) throws HttpException, IOException {
-        File contentFile = new File("D:/asd.png");
+        File contentFile = new File("C:/pi.png");
 
         byte[] buffer = null;
         try
@@ -46,11 +42,11 @@ public class UploadFileTest {
         JSONObject content = new JSONObject();
         content.put("Body", fileStr);
         content.put("FolderId", "0057F000000ebtGQAQ");
-        content.put("Name", "testFile");
+        content.put("Name", "pi");
         content.put("Type", "png");
         HttpClient httpclient = new HttpClient();
         String accessToken="00D7F000001ca8T!AQwAQLBx8TSGHndf2mT0fJHWcOonOk3UJu6kcuwvX._7Ko5BilLneNLVpLwyXonrExIirci7buDXA5bMxgukOnsMl7serxNu";
-        PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/sobjects/Document/");
+        PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/Document/0157F000000HxpXQAS");
         post.addRequestHeader("Authorization", "OAuth "+accessToken);
         post.setRequestEntity(new StringRequestEntity(content.toString(),"application/json", null));
         int returnCode = httpclient.executeMethod(post);

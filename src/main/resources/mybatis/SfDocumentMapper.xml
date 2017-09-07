@@ -3,6 +3,8 @@
 <mapper namespace="com.joyone.test.mapper.SfDocumentMapper">
     <select id="getSfDocument" parameterType="java.lang.String" resultType="com.joyone.test.entity.SfDocument">
         SELECT
+              name,
+              type,
               sfid,
               body
         FROM salesforce.document

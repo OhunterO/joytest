@@ -7,6 +7,10 @@ public class SfDocument {
 
     private byte[] body;
 
+    private String name;
+
+    private String type;
+
     public String getSfid() {
         return sfid;
     }
@@ -21,5 +25,21 @@ public class SfDocument {
 
     public void setBody(byte[] body) {
         this.body = body;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
