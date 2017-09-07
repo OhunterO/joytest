@@ -59,7 +59,7 @@ public class TestController {
 
         HttpClient httpclient = new HttpClient();
         String accessToken=sFAccessTokenService.getAccessToken();
-        GetMethod post = new GetMethod("https://c.ap5.content.force.com/profilephoto/7297F000000kFJB/T/1");
+        GetMethod post = new GetMethod("https://c.ap5.content.force.com/profilephoto/7297F000000L4NQ/T");
         post.addRequestHeader("Authorization", "OAuth "+accessToken);
         int returnCode = httpclient.executeMethod(post);
        // System.out.println("returnCode " + returnCode);
