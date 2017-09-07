@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joyone.test.mapper.SfDocumentMapper">
+    <select id="getSfDocument" parameterType="java.lang.String" resultType="com.joyone.test.entity.SfDocument">
+        SELECT
+              sfid,
+              body
+        FROM salesforce.document
+        WHERE sfid = #{sfid}
+    </select>
+</mapper>

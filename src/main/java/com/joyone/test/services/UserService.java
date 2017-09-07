@@ -27,6 +27,9 @@ public class UserService {
         Map<String,Object> map=new HashMap<String, Object>();
         List<SfUser> list = sfQueryMapper.getSfUser();
         System.out.println("siezz==="+list.size());
+        for (SfUser user:list) {
+            System.out.println("sfid"+user.getSfid());
+        }
         return userMapper.selectByMap(map);
     }
 
