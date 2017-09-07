@@ -12,7 +12,7 @@ import java.io.*;
 public class UpdateFileTest {
 
     public  static void main(String[] args) throws HttpException, IOException {
-        File contentFile = new File("C:/pi.png");
+        File contentFile = new File("D:/pi.png");
 
         byte[] buffer = null;
         try
@@ -45,8 +45,12 @@ public class UpdateFileTest {
         content.put("Name", "pi");
         content.put("Type", "png");
         HttpClient httpclient = new HttpClient();
-        String accessToken="00D7F000001ca8T!AQwAQLBx8TSGHndf2mT0fJHWcOonOk3UJu6kcuwvX._7Ko5BilLneNLVpLwyXonrExIirci7buDXA5bMxgukOnsMl7serxNu";
-        PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/Document/0157F000000HxpXQAS");
+        String accessToken="00D7F000001ca8T!AQwAQAniLizKxDDUprauX.bvWRzmu7NPhXd451ZOhVwu4v2350jEBBwebWxrXligVxbJflZf2qEB2o8ocNhzmeTC.K4bLtWB";
+        PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/sobjects/Document/0157F000000HxpXQAS"){
+            @Override
+            public String getName() { return "PATCH"; }
+        }
+        ;
         post.addRequestHeader("Authorization", "OAuth "+accessToken);
         post.setRequestEntity(new StringRequestEntity(content.toString(),"application/json", null));
         int returnCode = httpclient.executeMethod(post);
