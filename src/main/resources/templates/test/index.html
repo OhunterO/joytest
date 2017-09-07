@@ -11,8 +11,8 @@
 <!-- BEGIN BODY -->
 <body class="fixed-top">
     <div style="color:red">tes</div>
-    <form>
-        <input type="file" />
+    <form method="POST" enctype="multipart/form-data" th:action="@{/test/updatePic}">
+        <input type="file" name="uploadFile"/>
         <input type="submit" value="upload"/>
     </form>
 </body>

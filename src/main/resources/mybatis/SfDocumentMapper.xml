@@ -8,4 +8,8 @@
         FROM salesforce.document
         WHERE sfid = #{sfid}
     </select>
+    
+    <update id="updateDocument" parameterType="java.util.Map">
+        update salesforce.document set name = #{name},type = #{type},body=#{body} WHERE sfid = #{sfid}
+    </update>
 </mapper>
