@@ -17,8 +17,8 @@ public class UpdateFileTest {
         byte[] buffer = null;
         try
         {
-            FileInputStream fis = new FileInputStream(contentFile);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            FileInputStream fis = new FileInputStream(contentFile);
             byte[] b = new byte[1024];
             int n;
             while ((n = fis.read(b)) != -1)

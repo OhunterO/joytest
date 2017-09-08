@@ -11,11 +11,11 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.ServletOutputStream;
@@ -67,6 +67,13 @@ public class TestController {
         return "refresh OK";
     }
 
+    /**
+     * 直接读取映射过来的Document获取Body来显示图片
+     * @param id
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping(value="/getdupic",method = GET)
     public String getPicFromDocument(@RequestParam(value = "id",required = false)String id, ServletResponse response) throws IOException{
@@ -102,16 +109,25 @@ public class TestController {
         return null;
     }
 
+    /**
+     * 获取图片，调用SF的自定义Rest api来获取
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
-    @RequestMapping(value="/getdupicapi",method = GET)
-    public String getPicFromDocumentApi(ServletResponse response) throws IOException{
+    @RequestMapping(value="/getPicFromSf/{id}",method = GET)
+    public String getPicFromDocumentApi(@PathVariable(value = "id")String id, ServletResponse response) throws IOException{
         HttpClient httpclient = new HttpClient();
-        String accessToken="00D7F000001ca8T!AQwAQAniLizKxDDUprauX.bvWRzmu7NPhXd451ZOhVwu4v2350jEBBwebWxrXligVxbJflZf2qEB2o8ocNhzmeTC.K4bLtWB";
+        String accessToken=sFAccessTokenService.getAccessToken();
+        JSONObject content = new JSONObject();
+        content.put("id", id);
         PostMethod post = new PostMethod("https://ap5.salesforce.com/services/apexrest/rest");
         post.addRequestHeader("Authorization", "OAuth "+accessToken);
+        post.setRequestEntity(new StringRequestEntity(content.toString(),"application/json", null));
         int returnCode = httpclient.executeMethod(post);
-        System.out.println("returnCode " + returnCode);
-        System.out.println(post.getResponseBodyAsString());
+        //System.out.println("returnCode " + returnCode);
+        //System.out.println(post.getResponseBodyAsString());
         String picStr = post.getResponseBodyAsString();
         picStr=picStr.replace("\"","");
         BASE64Decoder decoder = new BASE64Decoder();
@@ -136,6 +152,12 @@ public class TestController {
         return null;
     }
 
+    /**
+     * 查看SF的User表里的头像
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping(value="/getpic",method = GET)
     public String getPic(ServletResponse response) throws IOException {
@@ -179,6 +201,12 @@ public class TestController {
         return null;
     }
 
+    /**
+     * 直接更新映射过来的Document,但是有问题
+     *
+     * @param uploadFile
+     * @return
+     */
     @RequestMapping(value="/updatePic",method = POST)
     public String updatePic(@RequestParam(value = "uploadFile") MultipartFile uploadFile){
         System.out.println("update...");
@@ -211,9 +239,15 @@ public class TestController {
         return "redirect:/test/getdupic";
     }
 
+    /**
+     * 通过SF现有接口，更新文件
+     * @param uploadFile
+     * @return
+     */
     @RequestMapping(value="/updatePicSf",method = POST)
-    public String updatePicBySf(@RequestParam(value = "uploadFile") MultipartFile uploadFile){
+    public String updatePicBySf(@RequestParam(value = "uploadFile") MultipartFile uploadFile,@RequestParam(value = "documentSfId") String documentSfId){
         System.out.println("update...");
+        System.out.println("documentSfId=="+documentSfId);
         try {
             String fileName = uploadFile.getOriginalFilename();
             String type= fileName.substring(fileName.lastIndexOf("."),fileName.length());
@@ -231,23 +265,29 @@ public class TestController {
             bos.close();
             fileByte = bos.toByteArray();
             String fileStr = new String(Base64.encodeBase64(fileByte));
+
             JSONObject content = new JSONObject();
             content.put("Body", fileStr);
-            content.put("FolderId", "0157F000000HxpXQAS");
-            content.put("Name", "aa");
+            content.put("FolderId", "0057F000000ebtGQAQ");
+            content.put("Name", "pi");
             content.put("Type", "png");
             HttpClient httpclient = new HttpClient();
-            String accessToken=sFAccessTokenService.getAccessToken();
-            PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/Document/0157F000000HxpXQAS");
+            String accessToken= sFAccessTokenService.getAccessToken();
+            PostMethod post = new PostMethod("https://ap5.salesforce.com/services/data/v23.0/sobjects/Document/"+documentSfId){
+                @Override
+                public String getName() { return "PATCH"; }
+            }
+                    ;
             post.addRequestHeader("Authorization", "OAuth "+accessToken);
             post.setRequestEntity(new StringRequestEntity(content.toString(),"application/json", null));
             int returnCode = httpclient.executeMethod(post);
+
             System.out.println("returnCode " + returnCode);
             System.out.println(post.getResponseBodyAsString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/test/getdupic";
+        return "redirect:/test/getPicFromSf/"+documentSfId;
     }
 
 }

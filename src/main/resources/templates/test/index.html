@@ -12,7 +12,8 @@
 <body class="fixed-top">
     <div style="color:red">tes</div>
     <form method="POST" enctype="multipart/form-data" th:action="@{/test/updatePicSf}">
-        <input type="file" name="uploadFile"/>
+        <input type="file" name="uploadFile"/><br/>
+        sfid:<input type="text" name="documentSfId"/><br/>
         <input type="submit" value="upload"/>
     </form>
 </body>
