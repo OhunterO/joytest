@@ -36,6 +36,7 @@ public class SFAccessTokenService {
             ACCESS_TOKEN = getAccessTokenFromSalesForce();
             return ACCESS_TOKEN;
         }
+        System.out.println("ACCESS_TOKEN==="+ACCESS_TOKEN);
         return ACCESS_TOKEN;
     }
 
