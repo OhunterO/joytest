@@ -10,6 +10,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 @Order(value=1)
@@ -25,7 +28,9 @@ public class SocketTest implements CommandLineRunner {
 //            Socket s =serversocket.accept();
 //            new AcceptThread(s).start();
 //        }
-        emailService.sendEmail("重启邮件Test","重启邮件Test");
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = format.format(new Date());
+        emailService.sendEmail("重启邮件Test_"+time+"_from Heroku","重启邮件Test_"+time);
 
     }
     class AcceptThread extends Thread{
