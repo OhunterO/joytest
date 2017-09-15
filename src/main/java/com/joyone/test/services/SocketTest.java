@@ -1,5 +1,6 @@
 package com.joyone.test.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -13,14 +14,18 @@ import java.net.Socket;
 @Component
 @Order(value=1)
 public class SocketTest implements CommandLineRunner {
+
+    @Autowired
+    private EmailService emailService;
     @Override
     public void run(String... strings) throws Exception {
-        System.out.println("Scoket Test.................");
-        ServerSocket serversocket= new ServerSocket(8567);
-        while(true){
-            Socket s =serversocket.accept();
-            new AcceptThread(s).start();
-        }
+//        System.out.println("Scoket Test.................");
+//        ServerSocket serversocket= new ServerSocket(8567);
+//        while(true){
+//            Socket s =serversocket.accept();
+//            new AcceptThread(s).start();
+//        }
+        emailService.sendEmail("重启邮件Test","重启邮件Test");
 
     }
     class AcceptThread extends Thread{
