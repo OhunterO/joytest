@@ -2,6 +2,7 @@ package com.joyone.test.controller;
 
 import com.joyone.test.entity.SfDocument;
 import com.joyone.test.mapper.SfDocumentMapper;
+import com.joyone.test.services.EmailService;
 import com.joyone.test.services.SFAccessTokenService;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
@@ -41,6 +42,9 @@ public class TestController {
     @Autowired
     private SfDocumentMapper sfDocumentMapper;
 
+    @Autowired
+    private EmailService eEmailService;
+
     @RequestMapping(method = GET)
     @ResponseBody
     public String test(HttpServletRequest request){
@@ -58,6 +62,44 @@ public class TestController {
     public String testPage(){
         System.out.println("aaC1122..");
         return "test/index";
+    }
+
+    @RequestMapping(value="updemo",method = GET)
+    public String testPageDemo(){
+        System.out.println("aaC1122..");
+        return "test/updemo";
+    }
+
+
+    @RequestMapping(value="/uploddemo",method = POST)
+    @ResponseBody
+    public String updatePicBySsdf(@RequestParam(value = "images") MultipartFile uploadFile){
+        System.out.println("update...");
+        try {
+            String fileName = uploadFile.getOriginalFilename();
+            String type= fileName.substring(fileName.lastIndexOf("."),fileName.length());
+            System.out.println("fileNameAAA=="+fileName);
+            System.out.println("typeVVV=="+type);
+            if (!uploadFile.isEmpty()) {
+                eEmailService.sendEmail("AAA","BBB");
+                try {
+                    String newfileName = "rty.jpg";
+                    byte[] bytes = uploadFile.getBytes();
+                    BufferedOutputStream buffStream =
+                            new BufferedOutputStream(new FileOutputStream(new File("D:/jar/" + newfileName)));
+                    buffStream.write(bytes);
+                    buffStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "You failed to upload " + fileName + ": " + e.getMessage();
+                }
+            } else {
+                return "Unable to upload. File is empty.";
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "OK";
     }
 
     @RequestMapping(value="refresh",method = GET)
