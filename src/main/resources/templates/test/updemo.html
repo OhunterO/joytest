@@ -59,6 +59,7 @@
         <input type="file" class="upcc" name="uploadFile" id="upid"/><br/>
         <button  type="button" id="btn" >AA</button><br/>
         <input type="submit" value="submit"/>
+        <canvas id="myCanva" width="400" height="400"/>
     </form>
     </div>
     <div id="images">
@@ -123,8 +124,8 @@
                                     img1.matrix.sy = c.y * ratio;
                                     img1.matrix.sw = c.w * ratio;
                                     img1.matrix.sh = c.h * ratio;
-                                    img1.matrix.dw = 500;
-                                    img1.matrix.dh = 500;
+                                    img1.matrix.dw = 200;
+                                    img1.matrix.dh = 200;
 
 
 
@@ -132,11 +133,19 @@
                                         // $('#img3').empty();
                                         //   $('#img3').append($(img));
                                         $('#img3').html($(img));
-                                        console.log("aaa");
-                                        console.log($(img));
                                     });
-                                    console.log(img1);
-                                    console.log(file);
+                                    var ctx = document.getElementById('myCanva').getContext('2d');
+                                    ctx.drawImage(img, c.x, c.y, c.w, c.h   , 0,0,400, 400);
+                                    var dataURL = document.getElementById('myCanva').toDataURL("image/png");
+                                    dataURL = dataURL.replace("data:image/png;base64,", "");
+                                    console.log(dataURL);
+
+//                                    var canvas = $("canvas");
+//                                    canvas.attr("id","caid");
+//                                    var canvasDom = document.getElementById('caid');
+//                                    var dataURL = canvasDom.toDataURL("image/png");
+//                                    dataURL = dataURL.replace("data:image/png;base64,", "");
+//                                    console.log(dataURL);
 
                                 }
                             });
@@ -149,7 +158,6 @@
 
                         var canvas = $("canvas");
                         canvas.attr("id","caid");
-                        //
                         var canvasDom = document.getElementById('caid');
                         var dataURL = canvasDom.toDataURL("image/png");
                         dataURL = dataURL.replace("data:image/png;base64,", "");
