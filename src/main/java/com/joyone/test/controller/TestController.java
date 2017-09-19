@@ -86,7 +86,7 @@ public class TestController {
                     String newfileName = "rty.jpg";
                     byte[] bytes = uploadFile.getBytes();
                     BufferedOutputStream buffStream =
-                            new BufferedOutputStream(new FileOutputStream(new File("D:/jar/" + newfileName)));
+                            new BufferedOutputStream(new FileOutputStream(new File("F:/jar/" + newfileName)));
                     buffStream.write(bytes);
                     buffStream.close();
                 } catch (Exception e) {

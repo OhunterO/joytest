@@ -55,9 +55,10 @@
 <body class="fixed-top">
     <div style="color:red">tes</div>
     <div>
-    <form method="POST" enctype="multipart/form-data" th:action="@{/test/updatePicSf}">
-        <input type="file" name="uploadFile" id="upid"/><br/>
-        <button  type="button" id="btn" >AA</button>
+    <form method="POST" id="upForm" enctype="multipart/form-data" th:action="@{/test/uploddemo}">
+        <input type="file" class="upcc" name="uploadFile" id="upid"/><br/>
+        <button  type="button" id="btn" >AA</button><br/>
+        <input type="submit" value="submit"/>
     </form>
     </div>
     <div id="images">
@@ -131,6 +132,8 @@
                                         // $('#img3').empty();
                                         //   $('#img3').append($(img));
                                         $('#img3').html($(img));
+                                        console.log("aaa");
+                                        console.log($(img));
                                     });
                                     console.log(img1);
                                     console.log(file);
@@ -143,17 +146,14 @@
                     }
 
                     $('#btn').on('click',function(){
-                        FileAPI.upload({
-                        url: CTX+'/test/uploddemo',
 
-                          files: { images: img1 },
-                          progress: function (evt){  },
-                          complete: function (err, xhr){
-                            alert(xhr.responseText);
-
-                          }
-                        });
-
+                        var canvas = $("canvas");
+                        canvas.attr("id","caid");
+                        //
+                        var canvasDom = document.getElementById('caid');
+                        var dataURL = canvasDom.toDataURL("image/png");
+                        dataURL = dataURL.replace("data:image/png;base64,", "");
+                        console.log(dataURL);
                   });
 
                 }
