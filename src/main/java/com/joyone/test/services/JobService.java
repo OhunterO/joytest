@@ -18,11 +18,20 @@ public class JobService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private SFAccessTokenService sFAccessTokenService;
+
     @Scheduled(cron = "0 */40 * * * ? ")
     public void sendEmail(){
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String time = format.format(new Date());
         emailService.sendEmail("JobEmail_"+time+"_from Heroku","JobEmail_"+time);
+    }
+
+
+    @Scheduled(cron = "0 */20 * * * ? ")
+    public void refreshToken(){
+        sFAccessTokenService.refreshAccessToken();
     }
 
 
