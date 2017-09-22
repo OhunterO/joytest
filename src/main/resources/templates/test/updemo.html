@@ -75,6 +75,7 @@
         var el = $('input').get(0);
 
         console.log("demo start2....");
+        var baseStr="";
 
         FileAPI.event.on(el, 'change', function (evt){
             var files = FileAPI.getFiles(evt); // Retrieve file list
@@ -135,6 +136,7 @@
                                         $('#img3').html($(img));
                                     });
                                     var ctx = document.getElementById('myCanva').getContext('2d');
+                                    ctx.clearRect(0,0,c.w,c.h);
                                     ctx.drawImage(img, c.x, c.y, c.w, c.h   , 0,0,400, 400);
                                     var dataURL = document.getElementById('myCanva').toDataURL("image/png");
                                     dataURL = dataURL.replace("data:image/png;base64,", "");
@@ -152,16 +154,12 @@
                         });
                     function upload(imgFile){
                         imgFile.files[0] = $('#img3').files[0].getAsDataURL();
+                        baseStr=$('#img3').files[0].getAsDataURL();
                     }
 
                     $('#btn').on('click',function(){
+                        console.log(baseStr);
 
-                        var canvas = $("canvas");
-                        canvas.attr("id","caid");
-                        var canvasDom = document.getElementById('caid');
-                        var dataURL = canvasDom.toDataURL("image/png");
-                        dataURL = dataURL.replace("data:image/png;base64,", "");
-                        console.log(dataURL);
                   });
 
                 }
