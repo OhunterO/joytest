@@ -26,9 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -78,7 +76,9 @@ public class TestController {
     public String nowTime(){
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String time = format.format(new Date());
-        return time;
+        Calendar cal = Calendar.getInstance();
+        TimeZone timeZone = cal.getTimeZone();
+        return time+"   "+timeZone;
     }
 
     @RequestMapping(value="/uploddemo",method = POST)
