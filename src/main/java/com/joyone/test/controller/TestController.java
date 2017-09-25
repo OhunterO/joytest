@@ -24,6 +24,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +73,13 @@ public class TestController {
         return "test/updemo";
     }
 
+    @RequestMapping(value="nowtime",method = GET)
+    @ResponseBody
+    public String nowTime(){
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = format.format(new Date());
+        return time;
+    }
 
     @RequestMapping(value="/uploddemo",method = POST)
     @ResponseBody
