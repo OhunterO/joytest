@@ -3,6 +3,7 @@ package com.joyone.test.controller;
 import com.joyone.test.entity.SfDocument;
 import com.joyone.test.mapper.SfDocumentMapper;
 import com.joyone.test.services.EmailService;
+import com.joyone.test.services.FileTest;
 import com.joyone.test.services.SFAccessTokenService;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
@@ -46,6 +47,9 @@ public class TestController {
     @Autowired
     private EmailService eEmailService;
 
+    @Autowired
+    private FileTest fileTest;
+
     @RequestMapping(method = GET)
     @ResponseBody
     public String test(HttpServletRequest request){
@@ -69,6 +73,20 @@ public class TestController {
     public String testPageDemo(){
         System.out.println("aaC1122..");
         return "test/updemo";
+    }
+
+    @RequestMapping(value="createfile",method = GET)
+    @ResponseBody
+    public String createFile(){
+        fileTest.createFile();
+        fileTest.writeTxt();
+        return "createOK";
+    }
+
+    @RequestMapping(value="readfile",method = GET)
+    @ResponseBody
+    public String readFile(){
+        return fileTest.readTxt();
     }
 
     @RequestMapping(value="nowtime",method = GET)
