@@ -8,8 +8,13 @@ import java.io.*;
 public class FileTest {
 
     public void createFile(){
+        String path = "/samp";
+        File filePath = new File(path);
+        if(!filePath.exists()){
+            filePath.mkdir();
+        }
         String fileName = "one.txt";
-        File file = new File(fileName);
+        File file = new File(path+"/"+fileName);
         try {
             file.createNewFile();
         } catch (IOException e) {
@@ -18,7 +23,8 @@ public class FileTest {
     }
 
     public void writeTxt(){
-        String fileName = "one.txt";
+        //String fileName = "one.txt";
+        String fileName = "/samp/one.txt";
         File file = new File(fileName);
         FileOutputStream fos = null;
         PrintWriter pw = null;
@@ -41,7 +47,8 @@ public class FileTest {
     }
 
     public String readTxt(){
-        String fileName = "one.txt";
+        //String fileName = "one.txt";
+        String fileName = "/samp/one.txt";
         File file = new File(fileName);
         FileInputStream fis = null;
         InputStreamReader isr = null;
