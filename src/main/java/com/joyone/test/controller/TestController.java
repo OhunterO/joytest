@@ -88,7 +88,7 @@ public class TestController {
             e.printStackTrace();
         }
 
-        return "picStr sizew==="+picStr.length()+"$="+picStr;
+        return "https://joytone.herokuapp.com/joytest/test/gettestpic";
     }
 
 
