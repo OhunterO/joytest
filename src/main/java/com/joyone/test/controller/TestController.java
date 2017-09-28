@@ -72,8 +72,10 @@ public class TestController {
     @RequestMapping(value="/testpost",method = POST)
     @ResponseBody
     public String testPost(HttpServletRequest request){
+        FtpClient ftp = ftpTest.getFtpClient();
+        DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        String time = format.format(new Date());
         String picStr = request.getParameter("picStr");
-        //picStr= picStr.replace(" ","+");
         try{
             if(picStr!=null){
                 BASE64Decoder decoder = new BASE64Decoder();
@@ -83,17 +85,16 @@ public class TestController {
                         bytes[i] += 256;
                     }
                 }
-                OutputStream out = new FileOutputStream("/tmp/to.jpg");
-                out.write(bytes);
-                out.flush();
-                out.close();
-                //return "result:"+picStr;
+//                OutputStream out = new FileOutputStream("/tmp/"+time+".jpg");
+//                out.write(bytes);
+//                out.flush();
+//                out.close();
+                ftpTest.uploadFromSf(bytes,"/image/"+time+".jpg",ftp);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return "https://joytone.herokuapp.com/joytest/test/gettestpic";
+        return "https://joytone.herokuapp.com/joytest/test/gettestpicFromFtp?picName="+time+".jpg";
     }
 
 
@@ -127,9 +128,9 @@ public class TestController {
 
     @RequestMapping(value="/gettestpicFromFtp",method = GET)
     @ResponseBody
-    public void gettestpicFromFtp(HttpServletRequest request,HttpServletResponse response){
+    public void gettestpicFromFtp(@RequestParam(value = "picName")String picName, HttpServletRequest request,HttpServletResponse response){
         FtpClient ftp = ftpTest.getFtpClient();
-        ftpTest.getPicFromFtp("/image/dd.jpg",response,ftp);
+        ftpTest.getPicFromFtp("/image/"+picName,response,ftp);
     }
 
     @RequestMapping(value="index",method = GET)

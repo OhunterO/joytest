@@ -67,6 +67,26 @@ public class FtpTest {
         }
     }
 
+    public  void uploadFromSf(byte[] bytes, String ftpFile, FtpClient ftp) {
+        OutputStream os = null;
+        try {
+            // 将ftp文件加入输出流中。输出到ftp上
+            os = ftp.putFileStream(ftpFile);
+            os.write(bytes);
+            System.out.println("upload success!!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(os!=null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void download(String localFile, String ftpFile, FtpClient ftp) {
         InputStream is = null;
         FileOutputStream fos = null;
