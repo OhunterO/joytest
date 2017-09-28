@@ -68,7 +68,7 @@ public class TestController {
     @ResponseBody
     public String testPost(HttpServletRequest request){
         String picStr = request.getParameter("picStr");
-        picStr= picStr.replace(" ","+");
+        //picStr= picStr.replace(" ","+");
         try{
             if(picStr!=null){
                 BASE64Decoder decoder = new BASE64Decoder();
