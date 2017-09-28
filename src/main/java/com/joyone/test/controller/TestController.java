@@ -63,6 +63,16 @@ public class TestController {
         return "test success";
     }
 
+    @RequestMapping(value="/testpost",method = POST)
+    @ResponseBody
+    public String testPost(HttpServletRequest request){
+        String picStr = request.getParameter("picStr");
+        if(picStr!=null){
+            return "result:picStr";
+        }
+        return "result:noPic";
+    }
+
     @RequestMapping(value="index",method = GET)
     public String testPage(){
         System.out.println("aaC1122..");
