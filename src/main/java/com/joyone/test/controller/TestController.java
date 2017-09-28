@@ -68,7 +68,7 @@ public class TestController {
     public String testPost(HttpServletRequest request){
         String picStr = request.getParameter("picStr");
         if(picStr!=null){
-            return "result:picStr";
+            return "result:"+picStr;
         }
         return "result:noPic";
     }
