@@ -138,8 +138,8 @@
                                     var ctx = document.getElementById('myCanva').getContext('2d');
                                     ctx.clearRect(0,0,c.w,c.h);
                                     ctx.drawImage(img, c.x, c.y, c.w, c.h   , 0,0,400, 400);
-                                    var dataURL = document.getElementById('myCanva').toDataURL("image/png");
-                                    dataURL = dataURL.replace("data:image/png;base64,", "");
+                                    var dataURL = document.getElementById('myCanva').toDataURL("image/jpeg",0.92);
+                                    dataURL = dataURL.replace("data:image/jpeg;base64,", "");
                                     console.log(dataURL);
 
 //                                    var canvas = $("canvas");
