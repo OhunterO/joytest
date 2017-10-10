@@ -32,4 +32,10 @@ public class UserController {
         return "add OK!";
     }
 
+    @RequestMapping(value ="/addmany",method = GET)
+    public String addManyUser(){
+        userService.addManyUser();
+        return "add OK!";
+    }
+
 }
