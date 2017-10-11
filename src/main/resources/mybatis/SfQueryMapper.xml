@@ -13,10 +13,10 @@
         FROM salesforce.testinfo__c
     </select>
 
-    <select id="findOneTestInfo" resultType="com.joyone.test.entity.TestInfo">
+    <select id="findOneTestInfo" parameterType="java.lang.String" resultType="com.joyone.test.entity.TestInfo">
         SELECT
             sfid,name__c
-        FROM salesforce.testinfo__c
+        FROM salesforce.testinfo__c where name__c = #{name}
     </select>
 
 </mapper>
