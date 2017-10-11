@@ -7,4 +7,16 @@
               sfid
         FROM salesforce.user
     </select>
+
+    <select id="testInfoCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM salesforce.testinfo__c
+    </select>
+
+    <select id="findOneTestInfo" resultType="com.joyone.test.entity.TestInfo">
+        SELECT
+            sfid,name__c
+        FROM salesforce.testinfo__c
+    </select>
+
 </mapper>

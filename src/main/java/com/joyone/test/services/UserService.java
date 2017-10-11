@@ -49,9 +49,9 @@ public class UserService {
 
 
     public void addManyUser(){
-        userMapper.deleteSql("delete from testuser");
+        //userMapper.deleteSql("delete from testuser");
         List<User> userList = new ArrayList<User>();
-        for (int i=0;i<=11000;i++){
+        for (int i=11001;i<=41000;i++){
             User user = new User();
             user.setName("fanyo_"+i);
             user.setAge(20);
@@ -63,26 +63,43 @@ public class UserService {
 
     public void addTestPart(){
         List<TestPart> testPartList = new ArrayList<TestPart>();
-        for (int i=0;i<=11000;i++){
+        for (int i=11001;i<=26000;i++){
             TestPart testPart = new TestPart();
             testPart.setName("part_"+i);
-            if(i>5000){
-                testPart.setCreatedate(new Date());
-            }else{
+            if(i>11001&&i<16000){
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date  date = null;
                 try {
-                    date = format.parse("2016-11-04");
+                    date = format.parse("2015-08-04");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                testPart.setCreatedate(date);
+
+            }else if(i>16001&&i<21000){
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date  date = null;
+                try {
+                    date = format.parse("2014-06-04");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 testPart.setCreatedate(date);
             }
-
+            else{
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date  date = null;
+                try {
+                    date = format.parse("2013-11-04");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                testPart.setCreatedate(date);
+            }
             testPartList.add(testPart);
+
         }
         testPartMapper.insertTestPart(testPartList);
-
     }
 
 }
