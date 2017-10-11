@@ -51,7 +51,7 @@ public class UserService {
     public void addManyUser(){
         //userMapper.deleteSql("delete from testuser");
         List<User> userList = new ArrayList<User>();
-        for (int i=11001;i<=41000;i++){
+        for (int i=11001;i<=31000;i++){
             User user = new User();
             user.setName("fanyo_"+i);
             user.setAge(20);

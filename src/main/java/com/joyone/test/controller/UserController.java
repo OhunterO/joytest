@@ -23,6 +23,14 @@ public class UserController {
         return userService.userList();
     }
 
+    @RequestMapping(value ="/count",method = GET)
+    public String count(){
+        long start = System.currentTimeMillis();
+        List<User> list=userService.userList();
+        long end = System.currentTimeMillis();
+        return list==null?"0":(list.size()+"")+",time=="+(end-start);
+    }
+
     @RequestMapping(value ="/add",method = GET)
     public String addUser(){
         User user = new User();
