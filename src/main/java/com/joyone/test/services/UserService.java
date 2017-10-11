@@ -2,18 +2,20 @@ package com.joyone.test.services;
 
 
 import com.joyone.test.entity.SfUser;
+import com.joyone.test.entity.TestPart;
 import com.joyone.test.entity.User;
 import com.joyone.test.mapper.SfQueryMapper;
+import com.joyone.test.mapper.TestPartMapper;
 import com.joyone.test.mapper.TestUserMapper;
 import com.joyone.test.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Component
 @Transactional
@@ -27,6 +29,9 @@ public class UserService {
 
     @Autowired
     private TestUserMapper testUserMapper;
+
+    @Autowired
+    private TestPartMapper testPartMapper;
 
     public List<User> userList(){
         Map<String,Object> map=new HashMap<String, Object>();
@@ -53,6 +58,30 @@ public class UserService {
             userList.add(user);
         }
         testUserMapper.insertUsert(userList);
+
+    }
+
+    public void addTestPart(){
+        List<TestPart> testPartList = new ArrayList<TestPart>();
+        for (int i=0;i<=11000;i++){
+            TestPart testPart = new TestPart();
+            testPart.setName("part_"+i);
+            if(i>5000){
+                testPart.setCreatedate(new Date());
+            }else{
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date  date = null;
+                try {
+                    date = format.parse("2016-11-04");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                testPart.setCreatedate(date);
+            }
+
+            testPartList.add(testPart);
+        }
+        testPartMapper.insertTestPart(testPartList);
 
     }
 

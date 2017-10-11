@@ -38,4 +38,9 @@ public class UserController {
         return "add OK!";
     }
 
+    @RequestMapping(value ="/addtestpart",method = GET)
+    public String addTestPart(){
+        userService.addTestPart();
+        return "add OK!";
+    }
 }
