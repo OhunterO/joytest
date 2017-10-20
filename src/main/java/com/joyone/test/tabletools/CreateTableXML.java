@@ -47,6 +47,8 @@ public class CreateTableXML {
                 list = ExcelImportUtil.importExcel(input, TableDto.class, params);
                 System.out.println(list.size());
                 StringBuffer sb = new StringBuffer();
+                sb.append("<!--テーブル名:"+fileName+"-->");
+                sb.append(entry);
                 sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                 sb.append(entry);
                 sb.append("<"+pytable+"s"+">");
